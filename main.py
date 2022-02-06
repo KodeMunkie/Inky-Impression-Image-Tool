@@ -188,8 +188,8 @@ realpath = os.path.dirname(os.path.realpath(__file__))
 
 imageFrame = ImageFrame(realpath,
                         saturation=0.5,
-                        display_width=640,
-                        display_height=400
+                        display_width=600,
+                        display_height=448
                         )
 
 imageFrame.display_image_by_index(0)
