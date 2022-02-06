@@ -201,6 +201,9 @@ def handle_button(pin):
     last_button = LABELS[BUTTONS.index(pin)]
     print("Button press detected on pin: {} label: {}".format(pin, last_button))
 
+    is_short = event.duration_secs < 3
+    is_long = event.duration_secs >= 3
+    
     if last_button == "A":
         print("random image")
         imageFrame.display_random_image()
@@ -211,9 +214,13 @@ def handle_button(pin):
         print("previous image")
         imageFrame.display_previous_image()
     elif last_button == "D":
-        print("switch list")
-        imageFrame.switch_file_list()
-        imageFrame.display_image_by_index(0)
+        if is_short:
+            print("switch list")
+            imageFrame.switch_file_list()
+            imageFrame.display_image_by_index(0)
+        elif is_long:
+            print("Shutting down")
+            subprocess.run("sudo shutdown --poweroff now", shell=True)
 
 
 # Press the green button in the gutter to run the script.
