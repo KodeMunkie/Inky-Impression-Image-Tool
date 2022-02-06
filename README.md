@@ -34,6 +34,6 @@ You can use sub folders.
 * add script to autostart
 ````bash
 sudo nano /etc/rc.local
-sudo /home/pi/pimoroni-Inky-Impression-57-image-frame/main.py 2>&1 | logger -t PRINTMINION &
+sudo python3 /home/pi/pimoroni-Inky-Impression-57-image-frame/main.py
 sudo reboot now
 ````
