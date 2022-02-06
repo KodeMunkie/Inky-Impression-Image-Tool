@@ -22,7 +22,7 @@ Button controls:
 
 # Setup
 ````bash
-git clone https://github.com/printminion/pimoroni-Inky-Impression-57-image-frame.git
+git clone https://github.com/BluBean/pimoroni-Inky-Impression-57-image-frame.git
 pip3 install -r requirements.txt
 ````
 * add images (preferably 600x448) to folders:
