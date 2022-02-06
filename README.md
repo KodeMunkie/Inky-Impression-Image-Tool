@@ -1,5 +1,5 @@
-# Image frame for pimoroni Inky Impression 4" (7 colour ePaper/eInk HAT)
-Use pimoroni [pimoroni Inky Impression 4"](https://shop.pimoroni.com/products/inky-impression-4) as images frame.
+# Image frame for pimoroni Inky Impression 5.7" (7 colour ePaper/eInk HAT)
+Use pimoroni [pimoroni Inky Impression 5.7"](https://shop.pimoroni.com/products/inky-impression-5-7) as images frame.
 
 Button controls:
 * A - random image
@@ -22,10 +22,10 @@ Button controls:
 
 # Setup
 ````bash
-git clone https://github.com/printminion/pimoroni-Inky-Impression-4-image-frame.git
+git clone https://github.com/printminion/pimoroni-Inky-Impression-57-image-frame.git
 pip3 install -r requirements.txt
 ````
-* add images (preferably 640x400) to folders:
+* add images (preferably 600x448) to folders:
   * `defauls` -  put `png` or `jpg` files which will be shown on boot.
   * `stills` - put `png` or `jpg` files here.
 
@@ -34,6 +34,6 @@ You can use sub folders.
 * add script to autostart
 ````bash
 sudo nano /etc/rc.local
-sudo /home/pi/pimoroni-Inky-Impression-4-image-frame/main.py 2>&1 | logger -t PRINTMINION &
+sudo /home/pi/pimoroni-Inky-Impression-57-image-frame/main.py 2>&1 | logger -t PRINTMINION &
 sudo reboot now
 ````
