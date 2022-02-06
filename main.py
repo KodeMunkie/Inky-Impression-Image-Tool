@@ -52,8 +52,8 @@ def draw_multiple_line_text(image, text, font, text_color, text_start_height):
 
 
 class ImageFrame:
-    displayWidth = 640
-    displayHeight = 400
+    displayWidth = 600
+    displayHeight = 448
     images = []
     images_stills = []
     images_default = []
@@ -63,7 +63,7 @@ class ImageFrame:
     image_file_extension = None
     current_image_index = 0
 
-    def __init__(self, real_path, saturation=0.5, display_width=640, display_height=400):
+    def __init__(self, real_path, saturation=0.5, display_width=600, display_height=448):
         self.current_image_index = None
         self.image_file = None
         self.displayWidth = display_width
