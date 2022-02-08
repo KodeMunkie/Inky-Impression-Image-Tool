@@ -55,7 +55,10 @@ class ImageFrame:
     displayWidth = 600
     displayHeight = 448
     images = []
-    images_stills = []
+    images_albums = []
+    images_artwork = []
+    images_comics = []
+    images_postcards = []
     images_default = []
     image = None
     image_file = None
@@ -79,9 +82,21 @@ class ImageFrame:
 
         extensions = ('*.png', '*.jpg')  # extensions to load
         for extension in extensions:
-            self.images_stills.extend(glob.glob("%s/stills/**/%s" % (realpath, extension), recursive=True))
-        print(self.images_stills)
-
+            self.images_albums.extend(glob.glob("%s/albums/**/%s" % (realpath, extension), recursive=True))
+        print(self.images_albums)
+        
+        for extension in extensions:
+            self.images_artwork.extend(glob.glob("%s/artwork/**/%s" % (realpath, extension), recursive=True))
+        print(self.images_artwork)
+        
+        for extension in extensions:
+            self.images_comics.extend(glob.glob("%s/comics/**/%s" % (realpath, extension), recursive=True))
+        print(self.images_comics)
+        
+        for extension in extensions:
+            self.images_postcards.extend(glob.glob("%s/postcards/**/%s" % (realpath, extension), recursive=True))
+        print(self.images_postcards)
+        
         for extension in extensions:
             self.images_default.extend(glob.glob("%s/default/**/%s" % (realpath, extension), recursive=True))
 
@@ -90,12 +105,23 @@ class ImageFrame:
         self.images = self.images_default
 
     def switch_file_list(self):
-        if self.current_image_list != "stills":
-            self.images = self.images_stills
-            self.current_image_list = "stills"
+        if self.current_image_list == "default":
+            self.images = self.images_albums
+            self.current_image_list = "albums"
+        elif self.current_image_list == "albums":
+            self.images = self.images_artwork
+            self.current_image_list = "artwork"
+        elif self.current_image_list == "artwork":
+            self.images = self.images_comics
+            self.current_image_list = "comics"
+        elif self.current_image_list == "comics":
+            self.images = self.images_postcards
+            self.current_image_list = "postcards"
         else:
             self.images = self.images_default
             self.current_image_list = "default"
+            
+            
 
         if len(self.images) == 0:
             error_message = "Error: folder \"%s\" contains no images" % self.current_image_list
@@ -174,8 +200,8 @@ class ImageFrame:
         image_list_index = randrange(2)
 
         if image_list_index == 0:
-            self.images = self.images_stills
-            self.current_image_list = "stills"
+            self.images = self.images_artwork
+            self.current_image_list = "artwork"
         else:
             self.images = self.images_default
             self.current_image_list = "default"
