@@ -1,4 +1,4 @@
-# Image Tool for Inky Impression 4" and 5.7" (7 colour ePaper/eInk HAT)
+# Image Tool for Inky Impression 4" and 5.7"
 
 Button controls:
 * A - random image
