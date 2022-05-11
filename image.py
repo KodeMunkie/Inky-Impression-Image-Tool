@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
 
+from platform import processor
 import sys
+import time
+import ImageProcessor
 
 from PIL import Image
+from inky import Inky7Colour as Inky
 
-from inky.auto import auto
+from inky.mock import InkyMockImpression as Inky # Simulator
+#from inky.auto import auto
 
-inky = auto(ask_user=True, verbose=True)
-saturation = 0.5
+#inky = auto(ask_user=True, verbose=True)
+inky = Inky();
+imPro =  ImageProcessor.ImageProcessor()
 
 if len(sys.argv) == 1:
     print("""
@@ -15,11 +21,12 @@ Usage: {file} image-file
 """.format(file=sys.argv[0]))
     sys.exit(1)
 
+start = time.time_ns()
 image = Image.open(sys.argv[1])
 resizedimage = image.resize(inky.resolution)
-
-if len(sys.argv) > 2:
-    saturation = float(sys.argv[2])
-
-inky.set_image(resizedimage, saturation=saturation)
+imPro.diffuse_image(resizedimage)
+inky.set_image(resizedimage, 1)
 inky.show()
+end = (time.time_ns()-start)/1000000000
+print(end)
+input('Press RETURN to exit')
