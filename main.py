@@ -2,7 +2,8 @@
 import os
 import glob
 import sys
-import ImageProcessor
+import time
+import image_processor
 from random import randrange
 
 import signal
@@ -10,7 +11,8 @@ import signal
 import RPi.GPIO as GPIO
 import textwrap
 
-from inky.auto import auto
+from inky import Inky7Colour as Inky
+#from inky.auto import auto
 #from inky.mock import InkyMockImpression as Inky # Simulator
 
 try:
@@ -21,8 +23,12 @@ sudo apt install python3-pil
 """)
 
 print("""
-inky_frame.py - Display a image files on the E-Ink.
+Inky Impression Slideshow. Display images from a folder on the E-Ink.
+Usage: {file} /path/to/images
 """)
+
+# minimum time in seconds before the image changes
+MIN_SLEEP_BETWEEN_IMAGES = 60
 
 # extensions to load
 EXTENSIONS = ('*.png', '*.jpg')
@@ -37,9 +43,8 @@ GPIO.setmode(GPIO.BCM)
 # with a "PULL UP", which weakly pulls the input signal to 3.3V.
 GPIO.setup(BUTTONS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-
-inky = auto(ask_user=True, verbose=True)
-# inky = Inky();
+#inky = auto(ask_user=True, verbose=True)
+inky = Inky()
 
 class ImageFrame:
     images = []
@@ -47,8 +52,11 @@ class ImageFrame:
     path_to_images = ''
     imPro = None
 
+    # Not a lock since this is single threaded and we want to bypass, not wait
+    ignore_image_change = False
+
     def __init__(self, path_to_images):
-        self.imPro =  ImageProcessor.ImageProcessor()
+        self.imPro =  image_processor.ImageProcessor()
         self.path_to_images = path_to_images
         self.init_files() 
         self.add_buttons()
@@ -90,16 +98,26 @@ class ImageFrame:
             print(error_text)
 
     def display_image_by_index(self, number):
+        if self.ignore_image_change:
+            print('Already changing image... request ignored')
+            return
         try:
-            print('Opening image ', self.images[number])
+            self.ignore_image_change = True
+            print('Opening and resizing image ', self.images[number])
             image = Image.open(self.images[number])
             resizedimage = image.resize(inky.resolution)
+            print('Diffusing image ', self.images[number])
             self.imPro.diffuse_image(resizedimage)
+            print('Displaying image ', self.images[number])
             inky.set_image(resizedimage, 1)
             inky.show()
+            ignore_image_change = False
         except BaseException as err:
             error_text = f"Unexpected {err=}, {type(err)=}"
             self.display_error_message(error_text)
+        finally:
+            self.current_image_index = number
+            self.ignore_image_change = False
 
     def display_random_image(self):
         image_index_to_show = randrange(len(self.images))
@@ -133,5 +151,6 @@ class ImageFrame:
             subprocess.run("sudo shutdown --poweroff now", shell=True)
 
 imageFrame = ImageFrame(sys.argv[1])
-imageFrame.display_image_by_index(0)
-signal.pause()
+while True:
+    imageFrame.display_next_image()
+    time.sleep(MIN_SLEEP_BETWEEN_IMAGES)

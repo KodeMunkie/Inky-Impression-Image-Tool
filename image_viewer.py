@@ -8,7 +8,8 @@ import ImageProcessor
 from PIL import Image
 from inky import Inky7Colour as Inky
 
-from inky.mock import InkyMockImpression as Inky # Simulator
+from inky import Inky7Colour as Inky
+#from inky.mock import InkyMockImpression as Inky # Simulator
 #from inky.auto import auto
 
 #inky = auto(ask_user=True, verbose=True)
