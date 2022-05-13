@@ -32,13 +32,13 @@ the python but be warned, even compiled however it takes minutes o a Pi Zero to 
 
 # Setup
 ````bash
-git clone https://github.com/KodeMunkie/Inky-Impression-Image-Tool.git
+git clone https://github.com/KodeMunkie/inky-impression-slideshow.git
 pip3 install -r requirements.txt
 ````
 
 # Usage
 ```bash
-python3 /home/pi/Inky-Impression-Image-Tool/main.py /your/image/folder
+python3 /home/pi/inky-impression-slideshow/main.py /your/image/folder
 ```
 
 # Recommended for better performance
@@ -46,7 +46,7 @@ Compile the program to binary due to poor performance when run directly as pytho
 
 ```bash
 sudo apt install nuitka
-nuitka3 --follow-import-to=image_processor --follow-import-to=PIL --follow-import-to=inky -o ./image-tool.bin /home/pi/Inky-Impression-Image-Tool/main.py
+nuitka3 --follow-import-to=image_processor --follow-import-to=PIL --follow-import-to=inky -o ./image-tool.bin /home/pi/inky-impression-slideshow/main.py
 ```
 Then to start it
 ```bash
