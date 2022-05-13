@@ -24,11 +24,12 @@ PIL's dither bias towards a green representation of blue, or other over saturate
 colours.
 
 Unfortunately this algorithm is currently very slow, taking minutes on a device such as Pi Zero
-to calculate, despite some caching of common colour data, and currently has no indicator of
-of the error diffusion progress until it's ready to show.
+to calculate, despite some caching of common colour data, and currently gives no indication of
+the error diffusion progress until it's ready to show.
 
 It is hoped performance will improve in subsequent versions, for now you can optionally compile
-the python but be warned, even compiled however it takes minutes o a Pi Zero to process images!
+the python but be warned even compiled it takes minutes for a device like a Pi Zero to process 
+each image!
 
 # Setup
 ````bash
