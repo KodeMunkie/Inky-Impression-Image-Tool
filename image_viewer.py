@@ -3,7 +3,7 @@
 from platform import processor
 import sys
 import time
-import ImageProcessor
+import image_processor
 
 from PIL import Image
 from inky import Inky7Colour as Inky
@@ -14,7 +14,7 @@ from inky import Inky7Colour as Inky
 
 #inky = auto(ask_user=True, verbose=True)
 inky = Inky();
-imPro =  ImageProcessor.ImageProcessor()
+imPro =  image_processor.ImageProcessor()
 
 if len(sys.argv) == 1:
     print("""

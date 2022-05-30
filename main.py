@@ -12,7 +12,6 @@ import RPi.GPIO as GPIO
 import textwrap
 
 from inky import Inky7Colour as Inky
-#from inky.auto import auto
 #from inky.mock import InkyMockImpression as Inky # Simulator
 
 try:
@@ -43,7 +42,6 @@ GPIO.setmode(GPIO.BCM)
 # with a "PULL UP", which weakly pulls the input signal to 3.3V.
 GPIO.setup(BUTTONS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-#inky = auto(ask_user=True, verbose=True)
 inky = Inky()
 
 class ImageFrame:
@@ -151,6 +149,9 @@ class ImageFrame:
             subprocess.run("sudo shutdown --poweroff now", shell=True)
 
 imageFrame = ImageFrame(sys.argv[1])
+
+# start with a random image otherwise things get boring fast...!
+imageFrame.display_random_image();
 while True:
-    imageFrame.display_next_image()
     time.sleep(MIN_SLEEP_BETWEEN_IMAGES)
+    imageFrame.display_next_image()
