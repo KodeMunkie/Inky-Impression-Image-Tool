@@ -108,6 +108,7 @@ class ImageFrame:
             self.imPro.diffuse_image(resizedimage)
             print('Displaying image ', self.images[number])
             inky.set_image(resizedimage, 1)
+            inky.set_border(inky.BLACK)
             inky.show()
             ignore_image_change = False
         except BaseException as err:
