@@ -84,7 +84,7 @@ class ImageFrame:
 
         self.display_image_by_index(prev_image_index)
 
-    def display_error_message(self, error_text, text_color=(0, 0, 0), text_start_height=0):
+    def display_error_message(self, error_text, text_color=(0, 0, 0), text_start_height=40):
         image_message = Image.new("RGB", inky.resolution, color=(200, 0, 0))
         font = ImageFont.load_default()
         self.draw_multiple_line_text(image_message, error_text, font, text_color, text_start_height)
@@ -121,7 +121,7 @@ class ImageFrame:
         image_index_to_show = randrange(len(self.images))
         self.display_image_by_index(image_index_to_show)
 
-    def draw_multiple_line_text(image, text, font, text_color, text_start_height):
+    def draw_multiple_line_text(self, image, text, font, text_color, text_start_height):
         draw = ImageDraw.Draw(image)
         image_width, image_height = image.size
         y_text = text_start_height
