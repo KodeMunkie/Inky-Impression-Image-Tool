@@ -3,6 +3,7 @@ import os
 import glob
 import sys
 import time
+import traceback
 import image_processor
 from random import randrange
 
@@ -92,7 +93,7 @@ class ImageFrame:
             inky.set_image(image_message, 1)
             inky.show()
         except BaseException as err:
-            error_text = f"Unexpected {err=}, {type(err)=}"
+            error_text = str(repr(err))
             print(error_text)
 
     def display_image_by_index(self, number):
@@ -100,19 +101,22 @@ class ImageFrame:
             print('Already changing image... request ignored')
             return
         try:
+            start = time.process_time()
             self.ignore_image_change = True
-            print('Opening and resizing image ', self.images[number])
+            print('Opening and resizing image', self.images[number])
             image = Image.open(self.images[number])
             resizedimage = image.resize(inky.resolution)
-            print('Diffusing image ', self.images[number])
+            print('Diffusing image', self.images[number])
             self.imPro.diffuse_image(resizedimage)
-            print('Displaying image ', self.images[number])
+            print('Displaying image', self.images[number])
             inky.set_image(resizedimage, 1)
             inky.set_border(inky.BLACK)
             inky.show()
             ignore_image_change = False
+            print('Time taken from open to display:', time.process_time() - start)
         except BaseException as err:
-            error_text = f"Unexpected {err=}, {type(err)=}"
+            traceback.print_exc()
+            error_text = str(repr(err))
             self.display_error_message(error_text)
         finally:
             self.current_image_index = number

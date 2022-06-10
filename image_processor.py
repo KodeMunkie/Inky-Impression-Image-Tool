@@ -23,7 +23,7 @@ class ImageProcessor:
         red_diff = source_colour[0] - target_colour[0]
         green_diff = source_colour[1] - target_colour[1]
         blue_diff = source_colour[2] - target_colour[2]
-        return (red_diff*red_diff) + (blue_diff*blue_diff) + (green_diff*green_diff)
+        return (red_diff*red_diff) + (green_diff*green_diff) + (blue_diff*blue_diff)
 
     def get_closest_colour(self, old_pixel):
         closest = self.cache.get(old_pixel, None)
@@ -54,10 +54,8 @@ class ImageProcessor:
         red = self.clamp(diffused_rgb[0] + (self.EIGHTH*(old_rgb[0] - new_rgb[0])))
         green = self.clamp(diffused_rgb[1] + (self.EIGHTH*(old_rgb[1] - new_rgb[1])))
         blue = self.clamp(diffused_rgb[2] + (self.EIGHTH*(old_rgb[2] - new_rgb[2])))
-        return self.get_integer_from_rgb([red, green, blue])
+        return (int(red), int(green), int(blue))
 
-    def get_integer_from_rgb(self, rgb):
-        return int(rgb[2]) << 16 | int(rgb[1]) << 8 | int(rgb[0])
 
     def distribute_error(self, output, old_pixel, new_pixel, x, y):
         xPlus1 = self.is_in_bounds(output, x+1, y)
@@ -85,7 +83,7 @@ class ImageProcessor:
     def diffuse_pixel(self, output, x, y):
         oldPixel = output.getpixel((x,y))
         newPixel = self.get_closest_colour(oldPixel)
-        output.putpixel((x,y), self.get_integer_from_rgb(newPixel))
+        output.putpixel((x,y), (newPixel[0], newPixel[1], newPixel[2]))
         self.distribute_error(output, oldPixel, newPixel, x, y)
 
     def diffuse_image(self, source_image): 
